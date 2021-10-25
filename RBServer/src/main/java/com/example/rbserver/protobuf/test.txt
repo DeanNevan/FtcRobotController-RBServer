@@ -1,0 +1,1 @@
+--proto_path D:\ASProjects\FtcRobotController-7.0\RBServer\src\main\java\com\example\rbserver\protobuf --java_out ./ .proto

@@ -1,0 +1,90 @@
+syntax ="proto3";
+
+enum Type{
+    UNKNOWN = 0;
+    CONNECT = 1;
+    DISCONNECT = 2;
+    HEARTBEAT = 3;
+    ROBOT_EVENT = 4;
+    ROBOT_OPMODE_LOG = 5;
+    ROBOT_REQUEST = 6;
+    OTHER = 7;
+}
+
+enum RobotEventType{
+    EVENT_UNKNOWN = 0;
+    EVENT_RESTRAT_ROBOT = 1;
+    EVENT_EXIT_APP = 2;
+    EVENT_START = 3;
+    EVENT_RESUME = 4;
+    EVENT_PAUSE = 5;
+    EVENT_STOP = 6;
+    EVENT_DESTROY = 7;
+}
+
+message Request{
+    Type type = 1;
+    int32 request_id = 2;
+    int64 timestamp = 3;
+    string clientID = 4;
+    oneof data_body{
+        RequestConnect requestConnect = 5;
+        RequestDisconnect requestDisconnect = 6;
+        RequestRobotRequest requestRobotRequest = 7;
+    }
+}
+
+message Response{
+    Type type = 1;
+    int32 request_id = 2;
+    int64 timestamp = 3;
+    string clientID = 4;
+    oneof data_body{
+        ResponseConnect responseConnect = 5;
+        ResponseDisconnect responseDisconnect = 6;
+        ResponseRobotRequest responseRobotRequest = 7;
+        RobotEvent robotEvent = 8;
+        RobotOpmodeLog robotOpmodeLog = 9;
+    }
+}
+
+message RequestRobotRequest{
+    string content = 1;
+    bytes b_content = 2;
+}
+
+message ResponseRobotRequest{
+    bool result = 1;
+    string words = 2;
+}
+
+message RequestConnect{
+}
+
+message RequestDisconnect{
+}
+
+message ResponseConnect{
+    bool result = 1;
+    string words = 2;
+}
+
+message ResponseDisconnect{
+    bool result = 1;
+    string words = 2;
+}
+
+message RobotEvent{
+    RobotEventType robot_event_type = 1;
+    string content = 2;
+    bytes b_content = 3;
+}
+
+message RobotOpmodeLog{
+    string opmode_name = 1;
+    string content = 2;
+    bytes b_content = 3;
+}
+
+
+
