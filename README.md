@@ -1,6 +1,6 @@
 
 ## 说明
-基于FTC赛事 RobotController APP
+基于FTC赛事 RobotController APP 7.0
 
 添加了RBServer模块，应用启动后将会默认在8888端口开启基于TCP的服务端
 
