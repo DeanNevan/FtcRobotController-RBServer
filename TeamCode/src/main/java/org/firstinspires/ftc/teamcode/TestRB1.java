@@ -35,9 +35,6 @@ import com.example.rbserver.client.RBClient;
 import com.example.rbserver.pool.RBServerClientPool;
 import com.example.rbserver.protobuf.RBMessage;
 import com.example.rbserver.server.RBServer;
-import com.google.protobuf.ByteString;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.RBLinearOpMode;
@@ -56,9 +53,9 @@ import org.firstinspires.ftc.robotcontroller.external.samples.RBLinearOpMode;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Test RB", group="RB Linear Opmode")
+@TeleOp(name="Test RB1", group="RB Linear Opmode")
 //@Disabled
-public class TestRB extends RBLinearOpMode {
+public class TestRB1 extends RBLinearOpMode {
     //create the builder of response & OpModeLog
     //创建回复消息和OpModeLog的builder
     RBMessage.Response.Builder responseBuilder = RBMessage.Response.newBuilder();
