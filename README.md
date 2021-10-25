@@ -14,7 +14,7 @@
 
 其中，示例客户端项目可在[FTCRB-Client](https://github.com/DeanNevan/FTCRB-Client)处找到，它是基于Godot游戏引擎编写的，如果比较熟练Godot开发，比如笔者本人，可以仅花数小时完成它，也可以很方便拓展和维护，当然你也可以基于Unity、基于QT等等来开发客户端。
 
-服务端RBServer模块的网络通信框架是Netty，TCP协议，默认端口8888，数据格式是谷歌的protobuf（在RBServer.protobuf中，RBMessage.proto）,为了应对粘包、半包问题，客户端到服务端使用$\_$三个字符作为分隔符、服务端到客户端使用数据包头部4个字节（big orders）的int数作为包体大小。如果计划自己开发客户端，请知晓。
+服务端RBServer模块的网络通信框架是Netty，TCP协议，默认端口8888，数据格式是谷歌的protobuf（在RBServer.protobuf中，RBMessage.proto），为了应对粘包、半包问题，客户端到服务端使用$\_$三个字符作为分隔符、服务端到客户端使用数据包头部4个字节（big orders）的int数作为包体大小。如果计划自己开发客户端，请知晓。
 
 简单的使用方法：客户端设备连接到RC设备发出的热点，然后在客户端中连接热点网关IP（就是RC设备）以及端口，即可。
 
