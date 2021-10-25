@@ -1,11 +1,17 @@
 
 ## 说明
 基于FTC赛事 RobotController APP
+
 添加了RBServer模块，应用启动后将会默认在8888端口开启基于TCP的服务端
+
 添加了一个RB_BasicOpMode_Linear.java示例操作程序OpMode
+
 通过RBServer，可以实现在OpMode中进行日志与事件广播/单播、接收并处理请求
+
 例如，假如你的机器实现了全场定位，你可以在OpMode中广播机器位置信息，然后用某种方式编写你的客户端，获取到位置信息后在一副场地图上画出你的机器的轨迹信息
+
 例如，你可以用某种方式编写你的客户端，发送远程控制指令、不经过DriverStation App来向机器OpMode发送请求
+
 其中，示例客户端项目可在[FTCRB-Client](https://github.com/DeanNevan/FTCRB-Client)处找到，它是基于Godot游戏引擎编写的，如果比较熟练Godot开发，比如笔者本人，可以仅花数小时完成它，也可以很方便拓展和维护，当然你也可以基于Unity、基于QT等等来开发客户端。
 
 服务端RBServer模块的网络通信框架是Netty，TCP协议，默认端口8888，数据格式是谷歌的protobuf（在RBServer.protobuf中，RBMessage.proto）,为了应对粘包、半包问题，客户端到服务端使用$\_$三个字符作为分隔符、服务端到客户端使用数据包头部4个字节（big orders）的int数作为包体大小。如果计划自己开发客户端，请知晓。
