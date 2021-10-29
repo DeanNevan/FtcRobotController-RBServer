@@ -1,8 +1,10 @@
 
 ## 说明
-基于FTC赛事 RobotController APP 7.0
+基于FTC赛事 RobotController APP 7.0 
 
-添加了RBServer模块，应用启动后将会默认在8888端口开启基于TCP的服务端
+由于FTC DriverStation APP端不易拓展、仅一对一、实时反馈（就一个telemetry信息栏）不够全面，所以编写此第三方模块——RBServer
+
+应用启动后将会默认在8888端口开启基于TCP的服务端
 
 添加了一个RB_BasicOpMode_Linear.java示例操作程序OpMode
 
