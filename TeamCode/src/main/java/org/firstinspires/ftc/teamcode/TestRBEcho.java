@@ -35,9 +35,6 @@ import com.example.rbserver.client.RBClient;
 import com.example.rbserver.pool.RBServerClientPool;
 import com.example.rbserver.protobuf.RBMessage;
 import com.example.rbserver.server.RBServer;
-import com.google.protobuf.ByteString;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.RBLinearOpMode;
@@ -56,9 +53,9 @@ import org.firstinspires.ftc.robotcontroller.external.samples.RBLinearOpMode;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Test RB", group="RB Linear Opmode")
+@TeleOp(name="TestRBEcho", group="RB Linear Opmode")
 //@Disabled
-public class TestRB extends RBLinearOpMode {
+public class TestRBEcho extends RBLinearOpMode {
     //create the builder of response & OpModeLog
     //创建回复消息和OpModeLog的builder
     RBMessage.Response.Builder responseBuilder = RBMessage.Response.newBuilder();
@@ -66,6 +63,9 @@ public class TestRB extends RBLinearOpMode {
 
     @Override
     public void runOpMode() {
+        telemetry.addLine("这个opMode会将收到的RB请求原封不动地再返回发送方");
+        telemetry.update();
+
         responseBuilder.setType(RBMessage.Type.ROBOT_OPMODE_LOG);//set the type of response 设置回复的类型
         robotOpmodeLogBuilder.setOpmodeName(this.getClass().getSimpleName());//设置OpMode的名称
 
@@ -87,11 +87,6 @@ public class TestRB extends RBLinearOpMode {
         RBServer.getSingleton().broadcast(responseBuilder);
 
         while (opModeIsActive()) {
-            //等待一段时间，设置Log的内容并调用RBServer的广播函数，发送response
-            sleep(1000);
-            robotOpmodeLogBuilder.setContent("running");
-            responseBuilder.setRobotOpmodeLog(robotOpmodeLogBuilder.build());//set the RobotOpModeLog 设置RobotOpModeLog
-            RBServer.getSingleton().broadcast(responseBuilder);
         }
 
         //设置Log的内容并调用RBServer的广播函数，发送response
@@ -132,7 +127,16 @@ public class TestRB extends RBLinearOpMode {
         //回复请求方
         RBServer.getSingleton().sendToClient(request.getClientID(), responseBuilder);
 
+        echo(request.getClientID(), request_content);
+
         telemetry.addLine(request_content);
         telemetry.update();
+    }
+
+    void echo(String clientID, String content){
+        //设置Log的内容并调用RBServer的单播函数，发送response给返回方
+        robotOpmodeLogBuilder.setContent(content);
+        responseBuilder.setRobotOpmodeLog(robotOpmodeLogBuilder.build());//set the RobotOpModeLog 设置RobotOpModeLog
+        RBServer.getSingleton().sendToClient(clientID, responseBuilder);
     }
 }

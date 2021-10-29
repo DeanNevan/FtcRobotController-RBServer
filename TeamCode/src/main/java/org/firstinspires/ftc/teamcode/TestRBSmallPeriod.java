@@ -39,6 +39,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.RBLinearOpMode;
 
+import java.util.Locale;
+
 
 /**
  * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
@@ -53,9 +55,9 @@ import org.firstinspires.ftc.robotcontroller.external.samples.RBLinearOpMode;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Test RB1", group="RB Linear Opmode")
+@TeleOp(name="TestRBSmallPeriod", group="RB Linear Opmode")
 //@Disabled
-public class TestRB1 extends RBLinearOpMode {
+public class TestRBSmallPeriod extends RBLinearOpMode {
     //create the builder of response & OpModeLog
     //创建回复消息和OpModeLog的builder
     RBMessage.Response.Builder responseBuilder = RBMessage.Response.newBuilder();
@@ -63,6 +65,9 @@ public class TestRB1 extends RBLinearOpMode {
 
     @Override
     public void runOpMode() {
+        telemetry.addLine("这个opMode将会每隔0.05秒发送一号手柄左摇杆值");
+        telemetry.update();
+
         responseBuilder.setType(RBMessage.Type.ROBOT_OPMODE_LOG);//set the type of response 设置回复的类型
         robotOpmodeLogBuilder.setOpmodeName(this.getClass().getSimpleName());//设置OpMode的名称
 
@@ -85,8 +90,8 @@ public class TestRB1 extends RBLinearOpMode {
 
         while (opModeIsActive()) {
             //等待一段时间，设置Log的内容并调用RBServer的广播函数，发送response
-            sleep(1000);
-            robotOpmodeLogBuilder.setContent("running");
+            sleep(50);
+            robotOpmodeLogBuilder.setContent(String.format("x:%f,y:%f", gamepad1.left_stick_x, gamepad1.left_stick_y));
             responseBuilder.setRobotOpmodeLog(robotOpmodeLogBuilder.build());//set the RobotOpModeLog 设置RobotOpModeLog
             RBServer.getSingleton().broadcast(responseBuilder);
         }
