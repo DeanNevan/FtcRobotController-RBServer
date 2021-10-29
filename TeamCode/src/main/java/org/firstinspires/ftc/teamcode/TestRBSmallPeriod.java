@@ -74,30 +74,25 @@ public class TestRBSmallPeriod extends RBLinearOpMode {
         //向RBServer注册自己，用以向RBServer标识当前OpMode
         RBServer.getSingleton().registerOpMode(this);
 
-        //设置Log的内容
-        robotOpmodeLogBuilder.setContent("runOpMode init");
-        responseBuilder.setRobotOpmodeLog(robotOpmodeLogBuilder.build());//set the RobotOpModeLog 设置RobotOpModeLog
-        //调用RBServer的广播函数，发送response
-        RBServer.getSingleton().broadcast(responseBuilder);
+        opModeBroadcast("runOpMode init");
 
         //等待OpMode开始
         waitForStart();
 
-        //设置Log的内容并调用RBServer的广播函数，发送response
-        robotOpmodeLogBuilder.setContent("runOpMode start");
-        responseBuilder.setRobotOpmodeLog(robotOpmodeLogBuilder.build());//set the RobotOpModeLog 设置RobotOpModeLog
-        RBServer.getSingleton().broadcast(responseBuilder);
+        opModeBroadcast("runOpMode start");
 
         while (opModeIsActive()) {
             //等待一段时间，设置Log的内容并调用RBServer的广播函数，发送response
             sleep(50);
-            robotOpmodeLogBuilder.setContent(String.format("x:%f,y:%f", gamepad1.left_stick_x, gamepad1.left_stick_y));
-            responseBuilder.setRobotOpmodeLog(robotOpmodeLogBuilder.build());//set the RobotOpModeLog 设置RobotOpModeLog
-            RBServer.getSingleton().broadcast(responseBuilder);
+            opModeBroadcast(String.format("x:%f,y:%f", gamepad1.left_stick_x, gamepad1.left_stick_y));
         }
 
+        opModeBroadcast("runOpMode stop");
+    }
+
+    public void opModeBroadcast(String content){
         //设置Log的内容并调用RBServer的广播函数，发送response
-        robotOpmodeLogBuilder.setContent("runOpMode stop");
+        robotOpmodeLogBuilder.setContent(content);
         responseBuilder.setRobotOpmodeLog(robotOpmodeLogBuilder.build());//set the RobotOpModeLog 设置RobotOpModeLog
         RBServer.getSingleton().broadcast(responseBuilder);
     }

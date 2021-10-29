@@ -68,26 +68,24 @@ public class RB_BasicOpMode_Linear extends RBLinearOpMode {
         //向RBServer注册自己，用以向RBServer标识当前OpMode
         RBServer.getSingleton().registerOpMode(this);
 
-        //设置Log的内容
-        robotOpmodeLogBuilder.setContent("runOpMode init");
-        responseBuilder.setRobotOpmodeLog(robotOpmodeLogBuilder.build());//set the RobotOpModeLog 设置RobotOpModeLog
-        //调用RBServer的广播函数，发送response
-        RBServer.getSingleton().broadcast(responseBuilder);
+        //广播
+        opModeBroadcast("runOpMode init");
 
         //等待OpMode开始
         waitForStart();
 
-        //设置Log的内容并调用RBServer的广播函数，发送response
-        robotOpmodeLogBuilder.setContent("runOpMode start");
-        responseBuilder.setRobotOpmodeLog(robotOpmodeLogBuilder.build());//set the RobotOpModeLog 设置RobotOpModeLog
-        RBServer.getSingleton().broadcast(responseBuilder);
+        opModeBroadcast("runOpMode start");
 
         while (opModeIsActive()) {
 
         }
 
+        opModeBroadcast("runOpMode stop");
+    }
+
+    public void opModeBroadcast(String content){
         //设置Log的内容并调用RBServer的广播函数，发送response
-        robotOpmodeLogBuilder.setContent("runOpMode stop");
+        robotOpmodeLogBuilder.setContent(content);
         responseBuilder.setRobotOpmodeLog(robotOpmodeLogBuilder.build());//set the RobotOpModeLog 设置RobotOpModeLog
         RBServer.getSingleton().broadcast(responseBuilder);
     }
